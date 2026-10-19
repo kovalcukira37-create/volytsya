@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин "Волиця" — Теребовля</title>
+    <style>
+        /* Основні стилі в стилі маркетплейсу */
+        :root {
+            --primary-color: #221f1f;
+            --accent-green: #00a046;
+            --accent-green-hover: #00bc52;
+            --bg-gray: #f5f5f5;
+            --border-color: #e9e9e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-gray);
+            color: #222222;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        /* Шапка сайту */
+        header {
+            background-color: var(--primary-color);
+            padding: 12px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+        }
+
+        .logo span {
+            color: var(--accent-green);
+        }
+
+        /* Пошуковий рядок */
+        .search-box {
+            flex-grow: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 15px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        /* Навігація в шапці */
+        .main-nav {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .main-nav button {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .main-nav button:hover, .main-nav button.active-main {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        /* Кнопка кошика */
+        .cart-btn {
+            position: relative;
+            background-color: var(--accent-green) !important;
+            border-color: var(--accent-green) !important;
+        }
+
+        .cart-badge {
+            background-color: #ff3b30;
+            color: #fff;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        /* Основна контейнер-секція */
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* Категорії */
+        .catalog-header {
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .catalog-header h2 {
+            margin: 0 0 15px 0;
+            font-size: 20px;
+        }
+
+        .main-categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .main-cat-btn {
+            background-color: #f0f0f0;
+            color: #333333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .main-cat-btn:hover, .main-cat-btn.active {
+            background-color: var(--accent-green);
+            color: #ffffff;
+        }
+
+        .sub-categories {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-top: 1px solid var(--border-color);
+            padding-top: 12px;
+        }
+
+        .sub-cat-btn {
+            background-color: transparent;
+            color: #666666;
+            border: 1px solid #cccccc;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .sub-cat-btn:hover, .sub-cat-btn.active {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            background-color: #f0faf4;
+        }
+
+        /* Сітка товарів */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 15px;
+        }
+
+        /* Картка товару */
+        .product-card {
+            background-color: #ffffff;
+            border: 2px solid #cccccc;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .product-card:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 4px 16px rgba(0, 160, 70, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .product-img-wrapper {
+            width: 100%;
+            height: 180px;
+            margin-bottom: 12px;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 4px;
+        }
+
+        .product-title {
+            font-size: 14px;
+            color: #333333;
+            margin-bottom: 10px;
+            height: 38px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #222222;
+        }
+
+        .btn-buy {
+            background-color: var(--accent-green);
+            color: #ffffff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-buy:hover {
+            background-color: var(--accent-green-hover);
+        }
+
+        /* Модальне вікно кошика */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            background: #ffffff;
+            box-shadow: -4px 0 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            flex-direction: column;
+        }
+
+        .cart-modal.open {
+            display: flex;
+        }
+
+        .cart-header {
+            padding: 15px 20px;
+            background: var(--primary-color);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .free-delivery-banner {
+            background-color: #e6f4ea;
+            color: #137333;
+            padding: 10px 15px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            border-bottom: 1px solid #ceead6;
+        }
+
+        .cart-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 0;
+        }
+
+        .cart-item-title {
+            font-size: 14px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cart-item-btn {
+            background: #eee;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .cart-item-btn.remove-btn {
+            background: #ffe6e6;
+            color: #cc0000;
+            font-size: 14px;
+            line-height: 1;
+            width: 28px;
+        }
+        .cart-item-btn.remove-btn:hover {
+            background: #ffcccc;
+        }
+
+        .cart-footer {
+            padding: 15px;
+            border-top: 1px solid var(--border-color);
+            background: #fafafa;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-checkout {
+            width: 100%;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-checkout:hover {
+            background: var(--accent-green-hover);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .overlay.open {
+            display: block;
+        }
+
+        /* СТОРІНКА "ПРО МАГАЗИН" */
+        .info-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .info-box {
+            background-color: #f9f9f9;
+            padding: 15px 20px;
+            border-left: 4px solid var(--accent-green);
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .gallery-item {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3 / 2;
+            object-fit: contain;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 350px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* СТОРІНКА "СТІЛ ЗАМОВЛЕНЬ" */
+        .orders-table-wrapper {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .orders-table th {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .orders-table td {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .orders-table tr:hover td {
+            background-color: #f9f9f9;
+        }
+
+        .orders-table .order-total {
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        .orders-table .order-items {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .orders-table .order-status {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-new {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-processing {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-shipped {
+            background-color: #cce5ff;
+            color: #004085;
+        }
+
+        .status-delivered {
+            background-color: #d6d8db;
+            color: #383d41;
+        }
+
+        .no-orders {
+            text-align: center;
+            color: #999;
+            padding: 30px 0;
+        }
+
+        /* Футер */
+        footer {
+            background-color: #ffffff;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #777777;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-box {
+                max-width: 100%;
+            }
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .main-nav {
+                justify-content: center;
+            }
+            .orders-table th,
+            .orders-table td {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo" onclick="openTab('catalog')">Волиця<span>.</span></div>
+
+        <div class="search-box">
+            <input type="text" id="search-input" class="search-input" placeholder="Я шукаю..." oninput="searchProducts()">
+        </div>
+
+        <nav class="main-nav">
+            <button id="btn-tab-catalog" class="active-main" onclick="openTab('catalog')">Товари</button>
+            <button id="btn-tab-about" onclick="openTab('about-store')">Про магазин</button>
+            <button id="btn-tab-orders" onclick="openTab('orders')">📋 Замовлення</button>
+            <button class="cart-btn" onclick="toggleCart()">🛒 Кошик <span id="cart-count" class="cart-badge">0</span></button>
+        </nav>
+    </header>
+
+    <div id="overlay" class="overlay" onclick="toggleCart()"></div>
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-header">
+            <h3>Ваш кошик</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div id="free-delivery-banner" class="free-delivery-banner">
+            Додайте товарів ще на 1000 ₴ для безкоштовної доставки!
+        </div>
+        <div id="cart-body" class="cart-body">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Разом:</span>
+                <span id="cart-total-price">0.00 ₴</span>
+            </div>
+            <button class="btn-checkout" onclick="placeOrder()">Оформити замовлення</button>
+        </div>
+    </div>
+
+    <main class="main-container">
+
+        <!-- ВКЛАДКА: Каталог -->
+        <section id="tab-catalog">
+            <div class="catalog-header">
+                <h2>Каталог товарів</h2>
+
+                <div class="main-categories">
+                    <button id="btn-main-food" class="main-cat-btn active" onclick="selectMainCategory('food')">🍎 Продукти</button>
+                    <button id="btn-main-chem" class="main-cat-btn" onclick="selectMainCategory('chem')">🧼 Побутова хімія</button>
+                </div>
+
+                <div id="sub-food" class="sub-categories">
+                    <button class="sub-cat-btn active" onclick="filterSubCategory('bread', event)">Хліб</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('water', event)">Вода</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('Sausage', event)">Ковбаса</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('Bun', event)">Булки</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('macaroni', event)">Макарони</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('Tea', event)">Чай</button>
+                </div>
+
+                <div id="sub-chem" class="sub-categories" style="display: none;">
+                    <button class="sub-cat-btn" onclick="filterSubCategory('Laundry_detergents', event)">Засоби для прання</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('Personal_care_products', event)">Засоби гігієни</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('Disinfectants', event)">Дезінфікуючі засоби</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('Dishwashing_liquids', event)">Засоби для миття посуду</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('All-purpose_cleaners', event)">Універсальні мийні засоби</button>
+                    <button class="sub-cat-btn" onclick="filterSubCategory('Bleaches_stain_removers', event)">Відбілювачі та плямовивідники</button>
+                </div>
+            </div>
+
+            <div class="products-grid">
+                <!-- Товари (залишені без змін для компактності) -->
+                <div class="product-card" data-sub="bread">
+                    <div class="product-img-wrapper">
+                        <img src="[ks,.png" class="product-img" alt="Хліб білий" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Хліб білий</div>
+                    <div class="product-bottom">
+                        <div class="product-price">24.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Хліб білий', 24.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="bread">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Батон білий" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Батон білий</div>
+                    <div class="product-bottom">
+                        <div class="product-price">25.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Батон білий', 25.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="bread">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Хліб чорний житній" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Хліб житній "Бородінський"</div>
+                    <div class="product-bottom">
+                        <div class="product-price">28.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Хліб житній Бородінський', 28.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="bread">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Хліб тостовий" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Хліб тостовий нарізаний</div>
+                    <div class="product-bottom">
+                        <div class="product-price">32.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Хліб тостовий нарізаний', 32.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="bread">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Лаваш вірменський" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Лаваш тонкий 3 шт</div>
+                    <div class="product-bottom">
+                        <div class="product-price">22.00 ₴ / уп</div>
+                        <button class="btn-buy" onclick="addToCart('Лаваш тонкий 3 шт', 22.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="water" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="djlf.png" class="product-img" alt="Вода мінеральна" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Вода мінеральна</div>
+                    <div class="product-bottom">
+                        <div class="product-price">20.00 ₴ / 1.5 л</div>
+                        <button class="btn-buy" onclick="addToCart('Вода мінеральна', 20.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="water" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Coca-Cola" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Coca-Cola</div>
+                    <div class="product-bottom">
+                        <div class="product-price">50.00 ₴ / 1.5 л</div>
+                        <button class="btn-buy" onclick="addToCart('Coca-Cola', 50.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="water" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Вода сильногазована" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Вода сильногазована "Моршинська"</div>
+                    <div class="product-bottom">
+                        <div class="product-price">22.00 ₴ / 1.5 л</div>
+                        <button class="btn-buy" onclick="addToCart('Вода Моршинська', 22.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="water" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Сік яблучний" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Сік яблучний "Садочок"</div>
+                    <div class="product-bottom">
+                        <div class="product-price">40.00 ₴ / 1 л</div>
+                        <button class="btn-buy" onclick="addToCart('Сік яблучний Садочок', 40.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="water" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Холодний чай" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Холодний чай Fuzetea Персик</div>
+                    <div class="product-bottom">
+                        <div class="product-price">35.00 ₴ / 1 л</div>
+                        <button class="btn-buy" onclick="addToCart('Холодний чай Fuzetea', 35.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Sausage" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Ковбаса варена" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Ковбаса варена "Лікарська"</div>
+                    <div class="product-bottom">
+                        <div class="product-price">50.00 ₴ / 100 г</div>
+                        <button class="btn-buy" onclick="addToCart('Ковбаса Лікарська', 50.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Sausage" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Ковбаса баварська" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Ковбаса баварська</div>
+                    <div class="product-bottom">
+                        <div class="product-price">70.00 ₴ / 100 г</div>
+                        <button class="btn-buy" onclick="addToCart('Ковбаса баварська', 70.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Sausage" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Сосиски" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Сосиски "Шкільні"</div>
+                    <div class="product-bottom">
+                        <div class="product-price">45.00 ₴ / 100 г</div>
+                        <button class="btn-buy" onclick="addToCart('Сосиски Шкільні', 45.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Sausage" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Салямі" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Ковбаса салямі "Золотиста"</div>
+                    <div class="product-bottom">
+                        <div class="product-price">65.00 ₴ / 100 г</div>
+                        <button class="btn-buy" onclick="addToCart('Ковбаса салямі Золотиста', 65.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Sausage" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Сардельки" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Сардельки з сиром</div>
+                    <div class="product-bottom">
+                        <div class="product-price">48.00 ₴ / 100 г</div>
+                        <button class="btn-buy" onclick="addToCart('Сардельки з сиром', 48.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Bun" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Булка з маком" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Булка з маком</div>
+                    <div class="product-bottom">
+                        <div class="product-price">25.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Булка з маком', 25.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Bun" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Булка з сиром" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Булка з сиром</div>
+                    <div class="product-bottom">
+                        <div class="product-price">25.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Булка з сиром', 25.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Bun" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Круасан" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Круасан з шоколадом</div>
+                    <div class="product-bottom">
+                        <div class="product-price">30.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Круасан з шоколадом', 30.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Bun" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Пончик" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Пончик з джемом</div>
+                    <div class="product-bottom">
+                        <div class="product-price">22.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Пончик з джемом', 22.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="Bun" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Булка з изюмом" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Слойка з родзинками</div>
+                    <div class="product-bottom">
+                        <div class="product-price">20.00 ₴ / шт</div>
+                        <button class="btn-buy" onclick="addToCart('Слойка з родзинками', 20.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="macaroni" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Макарони трубочкою" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Макарони трубочкою</div>
+                    <div class="product-bottom">
+                        <div class="product-price">45.00 ₴ / 500 г</div>
+                        <button class="btn-buy" onclick="addToCart('Макарони трубочкою', 45.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="macaroni" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Макарони закручені" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Макарони закручені</div>
+                    <div class="product-bottom">
+                        <div class="product-price">45.00 ₴ / 500 г</div>
+                        <button class="btn-buy" onclick="addToCart('Макарони закручені', 45.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="macaroni" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Спагеті" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Спагеті вищого ґатунку</div>
+                    <div class="product-bottom">
+                        <div class="product-price">48.00 ₴ / 500 г</div>
+                        <button class="btn-buy" onclick="addToCart('Спагеті вищого ґатунку', 48.00)">Купити</button>
+                    </div>
+                </div>
+                <div class="product-card" data-sub="macaroni" style="display: none;">
+                    <div class="product-img-wrapper">
+                        <img src="" class="product-img" alt="Вермішель" onerror="this.style.display='none'; this.parentElement.querySelector('.no-image').style.display='flex';">
+                        <div class="no-image" style="display:none; align-items:center; justify-content:center; background:#f0f0f0; color:#999; font-size:14px; height:100%; min-height:100px; border-radius:8px;">Фото немає</div>
+                    </div>
+                    <div class="product-title">Вермішель тонка</div>
+                    <div class="product-bottom">
+                        <div class="product-price">42.00 ₴ / 400 г</div>
+                        <button class="btn-buy" onclick="addToCart('Вермішель тонка', 42.00)">Купити</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ВКЛАДКА: ПРО МАГАЗИН -->
+        <section id="tab-about-store" style="display: none;">
+            <div class="info-card">
+                <h2>🏪 Про магазин "Волиця"</h2>
+
+                <div class="info-box">
+                    <p><strong>📍 Локація:</strong> м. Теребовля, вул. Глещавецька</p>
+                    <p><strong>🕒 Графік роботи:</strong> Щодня з 08:30 до 19:00</p>
+                    <p><strong>📞 Телефон:</strong> <a href="tel:+380970000000" style="color: #00a046; font-weight: bold;">+380 (97) 000-00-00</a></p>
+                </div>
+
+                <h3>Галерея</h3>
+                <div class="gallery-grid">
+                    <img src="AFCFL.jpg" alt="Фасад" class="gallery-item">
+                    <img src="njdfhb.png" alt="Товари" class="gallery-item">
+                </div>
+
+                <br>
+                <h3>Розташування на карті</h3>
+                <div class="map-container">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=%D0%92%D0%BE%D0%BB%D0%B8%D1%86%D1%8F+%D0%A2%D0%B5%D1%80%D0%B5%D0%B1%D0%BE%D0%B2%D0%BB%D1%8F&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- НОВА ВКЛАДКА: СТІЛ ЗАМОВЛЕНЬ -->
+        <section id="tab-orders" style="display: none;">
+            <div class="orders-table-wrapper">
+                <h2>📋 Стіл замовлень</h2>
+                <p style="color: #666; margin-bottom: 15px;">Тут відображаються всі оформлені замовлення.</p>
+                <div id="orders-list">
+                    <!-- Таблиця буде заповнена через JavaScript -->
+                    <table class="orders-table" id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Дата</th>
+                                <th>Товари</th>
+                                <th>Сума</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <tr>
+                                <td colspan="5" class="no-orders">Поки що немає замовлень</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; 2026 Магазин "Волиця". Усі права захищено.
+    </footer>
+
+    <script>
+        // ========== СТАН КОШИКА ТА ЗАМОВЛЕНЬ ==========
+        let cart = [];
+        let orders = [];
+        let orderCounter = 0;
+
+        // ========== ФУНКЦІЇ ДЛЯ КОШИКА ==========
+        function toggleCart() {
+            document.getElementById('cart-modal').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('open');
+        }
+
+        function addToCart(title, price) {
+            const existingItem = cart.find(item => item.title === title);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ title, price, quantity: 1 });
+            }
+            updateCartUI();
+        }
+
+        function changeQuantity(title, delta) {
+            const item = cart.find(item => item.title === title);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.title !== title);
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeItem(title) {
+            cart = cart.filter(item => item.title !== title);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartBody = document.getElementById('cart-body');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotalPrice = document.getElementById('cart-total-price');
+            const freeDeliveryBanner = document.getElementById('free-delivery-banner');
+
+            cartBody.innerHTML = '';
+            let total = 0;
+            let totalCount = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                totalCount += item.quantity;
+
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div class="cart-item-title">${item.title}</div>
+                    <div class="cart-item-controls">
+                        <button class="cart-item-btn" onclick="changeQuantity('${item.title}', -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="cart-item-btn" onclick="changeQuantity('${item.title}', 1)">+</button>
+                        <span style="min-width:60px; text-align:right; font-weight:bold;">${(item.price * item.quantity).toFixed(2)} ₴</span>
+                        <button class="cart-item-btn remove-btn" onclick="removeItem('${item.title}')" title="Видалити товар">✕</button>
+                    </div>
+                `;
+                cartBody.appendChild(itemElement);
+            });
+
+            cartCount.innerText = totalCount;
+            cartTotalPrice.innerText = `${total.toFixed(2)} ₴`;
+
+            if (total >= 1000) {
+                freeDeliveryBanner.style.backgroundColor = '#d4edda';
+                freeDeliveryBanner.style.color = '#155724';
+                freeDeliveryBanner.innerText = 'У вас безкоштовна доставка! 🎉';
+            } else {
+                const diff = (1000 - total).toFixed(2);
+                freeDeliveryBanner.style.backgroundColor = '#e6f4ea';
+                freeDeliveryBanner.style.color = '#137333';
+                freeDeliveryBanner.innerText = `Додайте товарів ще на ${diff} ₴ для безкоштовної доставки!`;
+            }
+        }
+
+        // ========== ФУНКЦІЯ ОФОРМЛЕННЯ ЗАМОВЛЕННЯ ==========
+        function placeOrder() {
+            if (cart.length === 0) {
+                alert('Кошик порожній! Додайте товари перед замовленням.');
+                return;
+            }
+
+            // Розраховуємо загальну суму
+            let total = 0;
+            const itemsList = cart.map(item => {
+                total += item.price * item.quantity;
+                return `${item.title} (${item.quantity} шт.)`;
+            }).join('; ');
+
+            // Додаємо замовлення до списку
+            orderCounter++;
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('uk-UA') + ' ' + now.toLocaleTimeString('uk-UA', {hour: '2-digit', minute:'2-digit'});
+            
+            orders.push({
+                id: orderCounter,
+                date: dateStr,
+                items: itemsList,
+                total: total,
+                status: 'Нове'
+            });
+
+            // Очищуємо кошик
+            cart = [];
+            updateCartUI();
+            toggleCart(); // закриваємо кошик
+
+            // Оновлюємо таблицю замовлень
+            renderOrdersTable();
+            alert(`Замовлення #${orderCounter} оформлено! Дякуємо!`);
+        }
+
+        // ========== ФУНКЦІЯ ВІДОБРАЖЕННЯ ТАБЛИЦІ ЗАМОВЛЕНЬ ==========
+        function renderOrdersTable() {
+            const tbody = document.getElementById('orders-table-body');
+            
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="no-orders">Поки що немає замовлень</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            orders.forEach(order => {
+                // Визначаємо клас для статусу
+                let statusClass = 'status-new';
+                if (order.status === 'В обробці') statusClass = 'status-processing';
+                else if (order.status === 'Відправлено') statusClass = 'status-shipped';
+                else if (order.status === 'Доставлено') statusClass = 'status-delivered';
+
+                html += `
+                    <tr>
+                        <td><strong>#${order.id}</strong></td>
+                        <td>${order.date}</td>
+                        <td class="order-items">${order.items}</td>
+                        <td class="order-total">${order.total.toFixed(2)} ₴</td>
+                        <td><span class="order-status ${statusClass}">${order.status}</span></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        // ========== НАВІГАЦІЯ ЗА ВКЛАДКАМИ ==========
+        function openTab(tabName) {
+            document.getElementById('tab-catalog').style.display = tabName === 'catalog' ? 'block' : 'none';
+            document.getElementById('tab-about-store').style.display = tabName === 'about-store' ? 'block' : 'none';
+            document.getElementById('tab-orders').style.display = tabName === 'orders' ? 'block' : 'none';
+            
+            document.getElementById('btn-tab-catalog').classList.toggle('active-main', tabName === 'catalog');
+            document.getElementById('btn-tab-about').classList.toggle('active-main', tabName === 'about-store');
+            document.getElementById('btn-tab-orders').classList.toggle('active-main', tabName === 'orders');
+
+            // Якщо відкриваємо вкладку замовлень — оновлюємо таблицю
+            if (tabName === 'orders') {
+                renderOrdersTable();
+            }
+        }
+
+        // ========== КАТЕГОРІЇ ТА ФІЛЬТРИ ==========
+        function selectMainCategory(cat) {
+            document.getElementById('btn-main-food').classList.toggle('active', cat === 'food');
+            document.getElementById('btn-main-chem').classList.toggle('active', cat === 'chem');
+            
+            document.getElementById('sub-food').style.display = cat === 'food' ? 'flex' : 'none';
+            document.getElementById('sub-chem').style.display = cat === 'chem' ? 'flex' : 'none';
+        }
+
+        function filterSubCategory(subCat, event) {
+            const buttons = event.target.parentElement.querySelectorAll('.sub-cat-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.product-card');
+            cards.forEach(card => {
+                if (card.getAttribute('data-sub') === subCat) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.product-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.product-title').innerText.toLowerCase();
+                if (title.includes(query)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ========== ДОДАЄМО ДЕМО-ЗАМОВЛЕННЯ ДЛЯ ПРИКЛАДУ ==========
+        // (можна видалити, якщо не потрібно)
+        (function addDemoOrders() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('uk-UA') + ' ' + now.toLocaleTimeString('uk-UA', {hour: '2-digit', minute:'2-digit'});
+            
+            orders.push({
+                id: ++orderCounter,
+                date: dateStr,
+                items: 'Хліб білий (2 шт.); Батон білий (1 шт.)',
+                total: 73.00,
+                status: 'Нове'
+            });
+            orders.push({
+                id: ++orderCounter,
+                date: dateStr,
+                items: 'Coca-Cola (3 шт.); Вода Моршинська (1 шт.)',
+                total: 172.00,
+                status: 'В обробці'
+            });
+            orders.push({
+                id: ++orderCounter,
+                date: dateStr,
+                items: 'Ковбаса Лікарська (2 шт.); Сосиски Шкільні (1 шт.)',
+                total: 145.00,
+                status: 'Відправлено'
+            });
+            // Оновлюємо таблицю при завантаженні
+            setTimeout(() => renderOrdersTable(), 100);
+        })();
+    </script>
+</body>
+</html>
